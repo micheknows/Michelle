@@ -10,3 +10,4 @@ assistant = Assistant(API_KEY)
 # Send a message and get the response
 response = assistant.send_message("Hello")
 print(response)
+print("hi")
