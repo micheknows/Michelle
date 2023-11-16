@@ -10,4 +10,14 @@ API_KEY = os.getenv("sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e")
 # Send a message and get the response
 #response = assistant.send_message("Hello")
 #print(response)
-print("hi")
+#print("hi")
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run()
