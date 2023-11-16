@@ -24,7 +24,14 @@
                 Create
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ url_for('create') }}">TpT</a></li>
+                              <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Teachers Pay Teachers
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('create') }}">TpT</a></li>
+                              </ul>
+                              </li>
               </ul>
             </li>
           </ul>
