@@ -1,12 +1,12 @@
-from flask import Flask
+import os
+from chatgpt import Assistant
 
-app = Flask(__name__)
+# Set your ChatGPT API Key
+API_KEY = os.getenv("sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e")
 
+# Create the assistant
+assistant = Assistant(API_KEY)
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
-
-
-if __name__ == '__main__':
-    app.run()
+# Send a message and get the response
+response = assistant.send_message("Hello")
+print(response)
