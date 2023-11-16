@@ -1,0 +1,38 @@
+<!-- templates/tpt/createtpt.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Teachers Pay Teachers</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Create
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item dropdown">
+
+                  <li><a class="dropdown-item" href="{{ url_for('createraces') }}">Create R.A.C.E.S. Writing Packets</a></li>
+
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container mt-5">
+  <h1>Create Teachers Pay Teachers Content</h1>
+</div>
+
+      {% block content %}{% endblock %}
+
+{% endblock %}
