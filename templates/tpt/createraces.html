@@ -47,4 +47,61 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+    <button id="getDaysBtn" type="button" class="btn btn-primary">Get Special Days</button>
+
+<div id="specialDays" style="display: none;">
+  <h3>Special Days for <span id="monthName">Month</span></h3>
+
+  <ul id="daysList" class="list-group">
+  </ul>
+
+  <button id="addDayBtn" type="button" class="btn btn-secondary">Add Day</button>
+
+  <button id="approveBtn" type="button" class="btn btn-success">Approve</button>
+</div>
+
+<script>
+
+// ChatGPT API settings
+const API_KEY = "xxx";
+const API_URL = "https://api.chatgpt.com";
+
+// Get Special Days button click
+document.getElementById("getDaysBtn").addEventListener("click", async function() {
+
+  // Call API
+  const response = await fetch(API_URL, {
+    headers: {
+      Authorization: `Bearer ${API_KEY}`
+    },
+    method: 'POST',
+    body: {
+      prompt: "Provide a list of holidays and special days for January"
+    }
+  });
+
+  const days = await response.text();
+
+  // Populate list
+  populateDaysList(days.split("\n"));
+
+  // Show list
+  document.getElementById("specialDays").style.display = "block";
+
+});
+
+// Populate days list
+function populateDaysList(days) {
+  let list = "";
+
+  days.forEach(day => {
+    list += `<li class="list-group-item">${day}</li>`
+  });
+
+  document.getElementById("daysList").innerHTML = list;
+}
+
+</script>
+
+
 {% endblock %}
