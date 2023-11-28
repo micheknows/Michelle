@@ -1,7 +1,7 @@
 import os
 
 from openai import OpenAI
-os.environ["OPENAI_API_KEY"] = "sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e"
+os.environ["OPENAI_API_KEY"] = "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"
 # Set your ChatGPT API Key
 
 # Create the assistant
