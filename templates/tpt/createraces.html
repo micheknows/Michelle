@@ -62,44 +62,32 @@
 <script>
 
 // ChatGPT API settings
-const API_KEY = "xxx";
-const API_URL = "https://api.chatgpt.com";
+const API_KEY = "sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e"
 
-// Get Special Days button click
-document.getElementById("getDaysBtn").addEventListener("click", async function() {
+// ChatGPT module
+import { ChatGPTClient } from 'chatgpt'
 
-  // Call API
-  const response = await fetch(API_URL, {
-    headers: {
-      Authorization: `Bearer ${API_KEY}`
-    },
-    method: 'POST',
-    body: {
-      prompt: "Provide a list of holidays and special days for January"
-    }
-  });
+// API Key
 
-  const days = await response.text();
+// Client instance
+const client = new ChatGPTClient({ apiKey: API_KEY });
 
-  // Populate list
-  populateDaysList(days.split("\n"));
+// Get Special Days button handler
+document.getElementById("getDaysBtn").addEventListener("click", async () => {
 
-  // Show list
+  // Get response
+  const response = await client.sendMessage(
+    "Provide a list of holidays and special days for January"
+  );
+
+  // Process days
+  const days = response.text.trim().split("\n");
+
+  populateDaysList(days);
+
   document.getElementById("specialDays").style.display = "block";
 
 });
-
-// Populate days list
-function populateDaysList(days) {
-  let list = "";
-
-  days.forEach(day => {
-    list += `<li class="list-group-item">${day}</li>`
-  });
-
-  document.getElementById("daysList").innerHTML = list;
-}
-
 </script>
 
 
