@@ -65,12 +65,12 @@
 const API_KEY = "sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e"
 
 // ChatGPT module
-import { ChatGPTClient } from 'chatgpt'
+// Instead of import
+const ChatGPTClient = window.ChatGPTClient;
 
-// API Key
+const client = new ChatGPTClient({apiKey: API_KEY});
 
-// Client instance
-const client = new ChatGPTClient({ apiKey: API_KEY });
+
 
 // Get Special Days button handler
 document.getElementById("getDaysBtn").addEventListener("click", async () => {
