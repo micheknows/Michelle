@@ -1,91 +1,65 @@
 <!-- templates/tpt/createraces.html -->
 
-{% extends '/tpt/createtpt.html' %}
+{% extends 'tpt/createtpt.html' %}
 
 {% block tpt_content %}
 
-<h1>Create R.A.C.E.S. Writing Packets</h1>
+<h1>Create R.A.C.E.S. Packets</h1>
 
-<form>
-  <div class="form-group">
-    <label for="gradeLevel">Grade Level</label>
-    <select class="form-control" id="gradeLevel">
-      <option>K</option>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-    </select>
-  </div>
+<form method="POST" action="/tpt/createraces">
 
-  <div class="form-group">
-    <label for="month">Month</label>
-    <select class="form-control" id="month">
-      <option>January</option>
-      <option>February</option>
-      <option>March</option>
-      <option>April</option>
-      <option>May</option>
-      <option>June</option>
-      <option>July</option>
-      <option>August</option>
-      <option>September</option>
-      <option>October</option>
-      <option>November</option>
-      <option>December</option>
-    </select>
-  </div>
+  <select name="gradeLevel" id="gradeLevel">
+    <option value="Kindergarten">Kindergarten</option>
+    <option value="1">1st Grade</option>
+    <option value="2">2nd Grade</option>
+    <option value="3">3rd Grade</option>
+    <option value="4">4th Grade</option>
+    <option value="5">5th Grade</option>
+    <option value="6">6th Grade</option>
+    <option value="7">7th Grade</option>
+    <option value="8">8th Grade</option>
+    <option value="9">9th Grade</option>
+    <option value="10">10th Grade</option>
+    <option value="11">11th Grade</option>
+    <option value="12">12th Grade</option>
+  </select>
+<p></p>
+  <select name="month" id="month">
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+    <option value="June">June</option>
+    <option value="July">July</option>
+    <option value="August">August</option>
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+  </select>
 
-</form>
 
-    <button id="getDaysBtn" type="button" class="btn btn-primary">Get Special Days</button>
+<p></p>
 
-<div id="specialDays" style="display: none;">
-  <h3>Special Days for <span id="monthName">Month</span></h3>
+<button id="getDaysBtn" type="submit">Get Special Days</button>
 
-  <ul id="daysList" class="list-group">
-  </ul>
+    </form>
 
-  <button id="addDayBtn" type="button" class="btn btn-secondary">Add Day</button>
 
-  <button id="approveBtn" type="button" class="btn btn-success">Approve</button>
+<div id="specialDays" style="display:none">
+
+  <h3 id="monthName"></h3>
+
+  <ul id="daysList"></ul>
+
+  <button id="addDayBtn">Add Day</button>
+
+  <button id="approveBtn">Approve</button>
+
 </div>
 
-<script>
 
-// ChatGPT API settings
-const API_KEY = "sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e"
-
-// ChatGPT module
-const { ChatGPTAPI } = window;
-const client = new ChatGPTAPI.ChatGPTClient({apiKey: API_KEY});
-
-
-// Get Special Days button handler
-document.getElementById("getDaysBtn").addEventListener("click", async () => {
-
-  // Get response
-  const response = await client.sendMessage(
-    "Provide a list of holidays and special days for January"
-  );
-
-  // Process days
-  const days = response.text.trim().split("\n");
-
-  populateDaysList(days);
-
-  document.getElementById("specialDays").style.display = "block";
-
-});
-</script>
 
 
 {% endblock %}
