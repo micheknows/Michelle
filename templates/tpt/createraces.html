@@ -65,11 +65,8 @@
 const API_KEY = "sh-Jfb3Wx23UyyNaBTxtMdaT3BlbkFJ600pLLfHjKBOuNLErH2e"
 
 // ChatGPT module
-// Instead of import
-const ChatGPTClient = window.ChatGPTClient;
-
-const client = new ChatGPTClient({apiKey: API_KEY});
-
+const { ChatGPTAPI } = window;
+const client = new ChatGPTAPI.ChatGPTClient({apiKey: API_KEY});
 
 
 // Get Special Days button handler
