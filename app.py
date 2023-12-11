@@ -53,10 +53,10 @@ def createraces():
 
         days = get_special_days(month, grade)
 
-        return render_template('createraces.html', month=month, grade=grade, days=days)
+        return render_template('tpt/createraces.html', month=month, grade=grade, days=days)
 
     else:
-        return render_template('createraces.html')
+        return render_template('tpt/createraces.html')
 
 
 if __name__ == '__main__':
