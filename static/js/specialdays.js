@@ -1,27 +1,44 @@
+document.addEventListener('DOMContentLoaded', () => {
+
 daysList = document.getElementById('daysList');
+
 monthName = document.getElementById('monthName');
+
 
 document.getElementById('getDaysBtn').addEventListener('click', () => {
 
-  fetch('/tpt/createraces', {method: 'POST'})
+  fetch('/api/specialdays', {
+    method: 'POST'
+  })
     .then(response => response.json())
+    .catch(err => {
+      console.log(err)
+      alert('Error parsing JSON' + err)
+    })
     .then(data => {
-
+      // Display data
       monthName.textContent = data.month;
 
-      daysList.innerHTML = ''; // clear
-
-      for (const day in data.days) {
-        const li = document.createElement('li');
-        li.textContent = day;
-        daysList.appendChild(li);
-      }
-
-      document.getElementById('specialDays').style.display = 'block';
-
+      updateDaysList(data.days);
     });
 
 });
+
+
+
+
+function updateDaysList(days) {
+  daysList = document.getElementById('daysList');
+  daysList.innerHTML = '';
+
+  for (const day in days) {
+    const li = document.createElement('li');
+    li.textContent = day;
+    daysList.appendChild(li);
+  }
+
+}
+updateDaysList(days)
 
 daysList = document.getElementById('daysList');
 
@@ -73,5 +90,7 @@ document.getElementById('addDayBtn').addEventListener('click', () => {
   li.textContent = day;
 
   daysList.appendChild(li);
+
+});
 
 });

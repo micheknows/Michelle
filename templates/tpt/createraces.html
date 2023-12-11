@@ -4,6 +4,8 @@
 
 {% block tpt_content %}
 
+<script src="{{ url_for('static', filename='js/specialdays.js') }}"></script>
+
 <h1>Create R.A.C.E.S. Packets</h1>
 
 <form method="POST" action="/tpt/createraces">
@@ -45,13 +47,18 @@
 <button id="getDaysBtn" type="submit">Get Special Days</button>
 
     </form>
-
-
-<div id="specialDays" style="display:none">
+<div id="specialDays" >
 
   <h3 id="monthName"></h3>
 
-  <ul id="daysList"></ul>
+  <ul id="daysList"> </ul>
+    <script>
+
+  const days = {{ days | tojson }};
+
+  updateDaysList(days);
+
+</script>
 
   <button id="addDayBtn">Add Day</button>
 
@@ -60,8 +67,9 @@
 </div>
 
 
-<script src="js/specialdays.js">
 
-</script>
+
+
+
 
 {% endblock %}
