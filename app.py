@@ -94,6 +94,8 @@ def get_special_days():
         )
         reply = completion.choices[0].message.content
         days = reply
+        print(days)
+        console.log(days)
 
 
 
