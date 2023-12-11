@@ -83,6 +83,8 @@ def get_special_days():
         }
         days = data['days']
     else:
+        if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']:
+            month="December"
         prompt = f"Give a list of all special days for the month of {month}. Include major holidays, minor special days and everything in between. The special days should be topics of interest to {grade} grade level students.  Give the days without any lead in text and format it as jsoon or a dictionary with day:date."
 
         client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
