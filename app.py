@@ -1,17 +1,12 @@
+from dotenv import load_dotenv
+load_dotenv()
+
+
 import os
 
 from openai import OpenAI
 os.environ["OPENAI_API_KEY"] = os.environ.get("ChatGPTAPI")
-# Set your ChatGPT API Key
 
-# Create the assistant
-#assistant = Assistant(API_KEY)
-
-# Send a message and get the response
-#response = assistant.send_message("Hello")
-#print(response)
-#print("hi")
-# app.py
 
 from flask import Flask, render_template, request, jsonify
 
