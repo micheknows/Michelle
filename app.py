@@ -45,23 +45,18 @@ def createtpt():
     return render_template('tpt/createtpt.html')
 
 
-
-
 @app.route("/tpt/createraces", methods=['POST', 'GET'])
 def createraces():
-    print('going here')
     if request.method == 'POST':
-        print('step1')
-        month = request.form.get('month', '')
-        grade = request.form.get('gradeLevel', '')
-        print(month)
-        print(grade)
-        response = get_special_days(month, grade)
-        print(response)
+        month = request.form.get('month')
+        grade = request.form.get('gradeLevel')
 
-        return jsonify({'month': month, 'grade': grade, 'days': response})
+        days = get_special_days(month, grade)
+
+        return render_template('createraces.html', month=month, grade=grade, days=days)
+
     else:
-        return render_template('/tpt/createraces.html')
+        return render_template('createraces.html')
 
 
 if __name__ == '__main__':
