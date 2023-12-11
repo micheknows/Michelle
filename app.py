@@ -59,7 +59,7 @@ def createraces():
         response = get_special_days(month, grade)
         print(response)
 
-        return jsonify({'response': response})
+        return jsonify({'month': month, 'grade': grade, 'days': response})
     else:
         return render_template('/tpt/createraces.html')
 
