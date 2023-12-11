@@ -13,7 +13,7 @@ os.environ["OPENAI_API_KEY"] = os.environ.get("ChatGPTAPI")
 #print("hi")
 # app.py
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 
