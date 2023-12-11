@@ -38,7 +38,6 @@ function updateDaysList(days) {
   }
 
 }
-updateDaysList(days)
 
 daysList = document.getElementById('daysList');
 
