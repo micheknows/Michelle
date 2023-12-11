@@ -59,10 +59,9 @@ from flask import make_response, jsonify
 
 @app.route("/tpt/createraces", methods=['POST', 'GET'])
 def createraces():
-    print("We went here")
     response = get_special_days()
     days = response.get_json()
-
+    print(days)
     return render_template('tpt/createraces.html', days=days)
 
 

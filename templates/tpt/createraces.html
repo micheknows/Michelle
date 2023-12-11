@@ -54,6 +54,14 @@
   <ul id="daysList"> </ul>
 
 
+    <script type="module">
+
+  import { updateDaysList } from {{ url_for('static', filename='js/specialdays.js') }};
+
+  updateDaysList(days);
+
+</script>
+
   <button id="addDayBtn">Add Day</button>
 
   <button id="approveBtn">Approve</button>
