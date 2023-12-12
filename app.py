@@ -68,7 +68,17 @@ def get_special_days():
             model="gpt-3.5-turbo",
         )
         reply = completion.choices[0].message.content
-        days = jsonify(reply)
+        try:
+            days = json.loads(reply)
+
+        except JSONDecodeError:
+
+            # Log error
+            logger.error("Invalid JSON response")
+
+            # Attempt to fix format
+            new_text = text.replace('\"', '"')
+            days = json.loads(new_text)
 
         print("Original reply is:  " + str(reply))
         print("Jsonified reply is:  " + str(days))
