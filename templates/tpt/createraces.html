@@ -26,7 +26,7 @@
       <P></P>
         <form method="POST" action="/tpt/createraces">
 
-          <select name="gradeLevel" id="gradeLevel">
+          <select name="gradeLevelSelect" id="gradeLevelSelect">
             <option value="Kindergarten">Kindergarten</option>
             <option value="1">1st Grade</option>
             <option value="2">2nd Grade</option>
@@ -42,7 +42,7 @@
             <option value="12">12th Grade</option>
           </select>
         <p></p>
-          <select name="month" id="month">
+          <select name="monthSelect" id="monthSelect">
             <option value="January">January</option>
             <option value="February">February</option>
             <option value="March">March</option>
@@ -60,7 +60,7 @@
 
         <p></p>
 
-        <button id="getDaysBtn" type="submit">Get Special Days</button>
+        <button id="getDaysBtn" type="button">Get Special Days</button>
 
             </form>
         <div id="specialDays" >
@@ -68,29 +68,15 @@
           <h3 id="monthName"></h3>
 
           <ul id="daysList"> </ul>
+
+
            <p>
-                 <button id="editBtn">Edit Day</button>
-                 <button id="delBtn">Delete Day</button>
                  <button id="addDayBtn">Add Day</button>
            </p>
             <p></p>
         <p></p>
 
-        <script type="module">
-          document.addEventListener('DOMContentLoaded', () => {
-              const days = {{ days | tojson }};
-              if (days && window.specialdays && window.specialdays.updateDaysList) {
-                  window.specialdays.updateDaysList(days, document.getElementById('daysList'));
-              }
 
-            {% if titles is defined %}
-              const titles = {{ titles | tojson }};
-              if (titles && window.specialdays && window.specialdays.updateDaysList) {
-                  window.specialdays.updateDaysList(days, document.getElementById('titleList'));
-              }
-              {% endif %}
-          });
-        </script>
 
 
 
@@ -148,6 +134,30 @@
 </script>
 
 
+
+    <!-- Modal -->
+    <div class="modal" id="dayModal"  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Day</h5>
+        <h5 class="modal-title" id="modalDayName">Edit Day</h5>
+      </div>
+
+      <div class="modal-body">
+        <input id="modalDay">
+      </div>
+
+      <div class="modal-footer">
+        <button id="closeBtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="saveBtn" class="btn btn-primary">Save changes</button>
+        <button id="delBtn" class="btn btn-primary">Delete Day</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

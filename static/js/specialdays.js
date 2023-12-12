@@ -1,24 +1,6 @@
-let daysList;
-let monthName;
-let gradelevel;
-
-// Ensure that specialdays is a property of the window object and not overwritten elsewhere
-window.specialdays = window.specialdays || {};
-window.saveEditBtn = window.saveEditBtn || {};
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  daysList = document.getElementById('daysList');
-  monthName = document.getElementById('monthName');
-  gradelevel = document.getElementById('gradelevel');
-
-
-  document.getElementById('getDaysBtn').addEventListener('click', () => {
-
-
-
-        var gradeLevelSelect = document.getElementById('gradeLevel');
-        var titlesTab = document.getElementById('titles-tab');
+let days = [];
+// Get the special days when the get special days button is clicked
+document.getElementById('getDaysBtn').addEventListener('click', () => {
 
         // Get the selected value of month and grade level
         var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
@@ -28,110 +10,133 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('monthNametitles').innerHTML = selectedMonth;
         document.getElementById('gradeleveltitles').innerHTML = selectedGradeLevel;
 
-            fetch('/api/specialdays', {
-      method: 'POST'
-    })
-    .then(response => response.json())
-    .catch(err => {
-      console.log(err)
-      alert('Error parsing JSON' + err)
-    })
-    .then(data => {
-      // Display data
-      monthName.textContent = data.month;
-      window.specialdays.updateDaysList(data.days);
-    });
-  });
+        // Let's run the python module to grab the special days'
+         fetch('/api/specialdays', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            month: selectedMonth,
+            grade: selectedGradeLevel
+          })
+        })
+            .then(response => response.json())
+            .catch(err => {
+              console.log(err)
+              alert('Error parsing JSON' + err)
+            })
+            .then(data => {
+              days = [];
 
-  // Define the updateDaysList function as a method of specialdays
-  window.specialdays.updateDaysList = function(days, listtoUpdate) {
-    listtoUpdate.innerHTML = '';
+                for (let k in data) {
+                  days.push(k + ": " + data[k]);
+                }
+              updateList(days,"daysList");
+            });
+          });
 
-    for (const day in days) {
-      const li = document.createElement('li');
-      li.textContent = `${day}`;
-      listtoUpdate.appendChild(li);
-    }
-  };
-
-  // Edit day
-let selectedLi;
-
-daysList.addEventListener('click', (e) => {
-
-  let li = e.target;
-
-  // Get <li> if child element clicked
-  if(e.target.tagName !== 'LI') {
-    li = e.target.parentElement;
-  }
-
-  if(selectedLi) {
-    selectedLi.classList.remove('selected');
-  }
-
-  selectedLi = li;
-  li.classList.add('selected');
-
-});
-
-
-window.saveEditBtn.saveEdit = function() {
-
-  const newText = editInput.value;
-  selectedLi.textContent = newText;
-
-  // Reset edit view
-  selectedLi.innerHTML = "";
-  selectedLi.textContent = newText;
-
-}
-
-// Edit button click
-editBtn.addEventListener('click', () => {
-
-  if(!selectedLi) {
-    return;
-  }
-
-  // Get current text
-  const text = selectedLi.textContent;
-
-  // Create edit view
-  selectedLi.innerHTML = `
-    <input type="text" id="editInput" value="${text}">
-    <button onclick="window.saveEditBtn.saveEdit()">Save</button>
-  `;
-
-  document.getElementById("editInput").focus();
-
-});
-
-
-
-
-// Delete button click
-delBtn.addEventListener('click', () => {
-
-  if(!selectedLi) {
-    return;
-  }
-
-  daysList.removeChild(selectedLi);
-
-  // Reset selected
-  selectedLi = null;
-
-});
-
-
-
-  // Add day
+  // Add a special day to the list manually
   document.getElementById('addDayBtn').addEventListener('click', () => {
     const day = prompt('Enter special day:');
-    const li = document.createElement('li');
-    li.textContent = day;
-    daysList.appendChild(li);
+    days.push(day);
+      updateList(days, "daysList");
   });
 
-});
+
+  // Edit a day that already exists
+        // Get modal element
+        let selectedLi;
+        const modal = document.getElementById('dayModal');
+
+        daysList.addEventListener('click', (e) => {
+
+          // Get clicked li
+          const li = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
+
+          // Set selected day
+          selectedLi = li;
+
+          // Show modal
+          modal.style.display = 'block';
+
+          // Set modal data from li
+          document.getElementById('modalDayName').innerText = li.innerText;
+
+        });
+
+
+
+        // Save changes and close modal
+        document.getElementById('saveBtn').addEventListener('click', () => {
+
+          // Get updated value
+          const updatedDay = document.getElementById('modalDay').value;
+
+          // Update selected li
+          selectedLi.innerText = updatedDay;
+           // Get index of selected li
+          const index = [...daysList.children].indexOf(selectedLi);
+
+          // Update days array
+          days[index] = updatedDay;
+          updateList(days,'daysList')
+          document.getElementById('modalDay').value="";
+
+          // Hide modal
+          modal.style.display = 'none';
+
+        });
+
+
+        // Delete day and close modal
+        document.getElementById('delBtn').addEventListener('click', () => {
+
+            // Get index
+              const index = [...daysList.children].indexOf(selectedLi);
+
+              // Remove from list
+              daysList.removeChild(selectedLi);
+
+              // Remove from array
+              days.splice(index, 1);
+
+              // Clear input
+              document.getElementById('modalDay').value="";
+
+              // Reset selected
+              selectedLi = null;
+
+          updateList(days,'daysList')
+          document.getElementById('modalDay').value="";
+
+          // Hide modal
+          modal.style.display = 'none';
+
+        });
+
+
+        // Close modal without saving
+        document.getElementById('closeBtn').addEventListener('click', () => {
+
+
+          // Hide modal
+          modal.style.display = 'none';
+          document.getElementById('modalDay').value="";
+
+        });
+
+
+   // this will update any given list with the given contents
+  function updateList(contents, listtoUpdate) {
+      var mylist = document.getElementById(listtoUpdate)
+    mylist.innerHTML = '';
+        contents.forEach(content => {
+
+          const li = document.createElement('li');
+          li.textContent = content;
+
+          mylist.appendChild(li);
+        })
+  };
+
