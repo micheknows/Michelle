@@ -92,6 +92,7 @@ editBtn.addEventListener('click', () => {
 
 
 
+
 // Delete button click
 delBtn.addEventListener('click', () => {
 
