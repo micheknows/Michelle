@@ -68,9 +68,10 @@ def get_special_days():
             model="gpt-3.5-turbo",
         )
         reply = completion.choices[0].message.content
-        days = reply
+        days = jsonify(reply)
 
         print("Original reply is:  " + str(reply))
+        print("Jsonified reply is:  " + str(days))
 
 
 
