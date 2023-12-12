@@ -8,71 +8,91 @@
 
 <h1>Create R.A.C.E.S. Packets</h1>
 
-<form method="POST" action="/tpt/createraces">
 
-  <select name="gradeLevel" id="gradeLevel">
-    <option value="Kindergarten">Kindergarten</option>
-    <option value="1">1st Grade</option>
-    <option value="2">2nd Grade</option>
-    <option value="3">3rd Grade</option>
-    <option value="4">4th Grade</option>
-    <option value="5">5th Grade</option>
-    <option value="6">6th Grade</option>
-    <option value="7">7th Grade</option>
-    <option value="8">8th Grade</option>
-    <option value="9">9th Grade</option>
-    <option value="10">10th Grade</option>
-    <option value="11">11th Grade</option>
-    <option value="12">12th Grade</option>
-  </select>
-<p></p>
-  <select name="month" id="month">
-    <option value="January">January</option>
-    <option value="February">February</option>
-    <option value="March">March</option>
-    <option value="April">April</option>
-    <option value="May">May</option>
-    <option value="June">June</option>
-    <option value="July">July</option>
-    <option value="August">August</option>
-    <option value="September">September</option>
-    <option value="October">October</option>
-    <option value="November">November</option>
-    <option value="December">December</option>
-  </select>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#specialDays">Special Days</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#titles">Titles</a>
+  </li>
+</ul>
+
+  <div class="tab-content">
+  <div class="tab-pane container active" id="specialDays">
+      <P></P>
+        <form method="POST" action="/tpt/createraces">
+
+          <select name="gradeLevel" id="gradeLevel">
+            <option value="Kindergarten">Kindergarten</option>
+            <option value="1">1st Grade</option>
+            <option value="2">2nd Grade</option>
+            <option value="3">3rd Grade</option>
+            <option value="4">4th Grade</option>
+            <option value="5">5th Grade</option>
+            <option value="6">6th Grade</option>
+            <option value="7">7th Grade</option>
+            <option value="8">8th Grade</option>
+            <option value="9">9th Grade</option>
+            <option value="10">10th Grade</option>
+            <option value="11">11th Grade</option>
+            <option value="12">12th Grade</option>
+          </select>
+        <p></p>
+          <select name="month" id="month">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
 
 
-<p></p>
+        <p></p>
 
-<button id="getDaysBtn" type="submit">Get Special Days</button>
+        <button id="getDaysBtn" type="submit">Get Special Days</button>
 
-    </form>
-<div id="specialDays" >
+            </form>
+        <div id="specialDays" >
 
-  <h3 id="monthName"></h3>
+          <h3 id="monthName"></h3>
 
-  <ul id="daysList"> </ul>
-   <p>
-         <button id="editBtn">Edit Day</button>
-         <button id="delBtn">Delete Day</button>
-   </p>
-    <p></p>
-<p></p>
+          <ul id="daysList"> </ul>
+           <p>
+                 <button id="editBtn">Edit Day</button>
+                 <button id="delBtn">Delete Day</button>
+                 <button id="addDayBtn">Add Day</button>
+           </p>
+            <p></p>
+        <p></p>
 
-<script type="module">
-  document.addEventListener('DOMContentLoaded', () => {
-      const days = {{ days | tojson }};
-      if (days && window.specialdays && window.specialdays.updateDaysList) {
-          window.specialdays.updateDaysList(days);
-      }
-  });
-</script>
+        <script type="module">
+          document.addEventListener('DOMContentLoaded', () => {
+              const days = {{ days | tojson }};
+              if (days && window.specialdays && window.specialdays.updateDaysList) {
+                  window.specialdays.updateDaysList(days);
+              }
+          });
+        </script>
 
-  <button id="addDayBtn">Add Day</button>
 
-  <button id="approveBtn">Approve</button>
 
-</div>
+          <button id="genTitlesBtn">Generate Titles</button>
+
+        </div>
+  </div>
+
+  <div class="tab-pane container fade" id="titles">
+    <!-- Title generation content -->
+  </div>
+
 
 
 
