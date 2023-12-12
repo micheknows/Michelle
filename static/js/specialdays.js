@@ -27,7 +27,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
 
 
-function updateDaysList(days) {
+export function updateDaysList(days) {
   daysList = document.getElementById('daysList');
   daysList.innerHTML = '';
 
