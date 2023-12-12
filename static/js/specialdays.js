@@ -1,4 +1,5 @@
 let daysList;
+let monthName;
 
 document.addEventListener('DOMContentLoaded', () => {
 
