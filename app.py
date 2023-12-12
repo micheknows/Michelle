@@ -16,7 +16,6 @@ app = Flask(__name__, static_url_path='', static_folder='static')
 
 
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -35,12 +34,68 @@ def createraces():
     print(days)
     return render_template('tpt/createraces.html', days=days)
 
+@app.route("/tpt/createracestitles", methods=['POST', 'GET'])
+def createracestitles():
+    titles, days = get_titles()
+    print(titles)
+    return render_template('tpt/createraces.html', days=days, titles=titles)
+
+
+def get_titles():
+    month = request.form.get('month')
+    grade = request.form.get('gradeLevel')
+    special_days = request.form.get('SpecialDaysInput')  # Assuming special days are passed as a list
+    print("month is " + month + " grade is "  + grade )
+    jdays = json.loads(special_days)
+
+    if IS_LOCAL:
+        # Use dummy data
+        data = {
+                "Story 1",
+                "Story 2"
+
+        }
+        titles = data
+    else:
+        if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']:
+            month="December"
+        topics =  ', '.join(special_days)
+        prompt = f"Give a list of 30 titles for the month of {month} suitable for very short stories for grade {grade}. Write one title for each of these topics:  {topics}.  Give the titles without any lead in text and format it as json."
+
+        client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+        completion = client.chat.completions.create(
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            model="gpt-3.5-turbo",
+        )
+        reply = completion.choices[0].message.content
+        print(reply)
+        try:
+            titles = json.loads(reply)
+
+        except JSONDecodeError:
+
+            # Log error
+            logger.error("Invalid JSON response")
+
+            # Attempt to fix format
+            new_text = text.replace('\"', '"')
+            titles = json.loads(new_text)
+
+        print("Original reply is:  " + str(reply))
+        print("Jsonified reply is:  " + str(titles))
+
+
+
+    return titles, jdays
 
 @app.route("/api/specialdays", methods=['POST'])
 def get_special_days():
     print("We went to special days")
     month = request.form.get('month')
     grade = request.form.get('gradeLevel')
+
 
     if IS_LOCAL:
         print("It's Local!!!")

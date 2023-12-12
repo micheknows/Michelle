@@ -80,8 +80,15 @@
           document.addEventListener('DOMContentLoaded', () => {
               const days = {{ days | tojson }};
               if (days && window.specialdays && window.specialdays.updateDaysList) {
-                  window.specialdays.updateDaysList(days);
+                  window.specialdays.updateDaysList(days, document.getElementById('daysList'));
               }
+
+            {% if titles is defined %}
+              const titles = {{ titles | tojson }};
+              if (titles && window.specialdays && window.specialdays.updateDaysList) {
+                  window.specialdays.updateDaysList(days, document.getElementById('titleList'));
+              }
+              {% endif %}
           });
         </script>
 
@@ -94,7 +101,15 @@
 
   <div class="tab-pane fade" id="titles" role="tabpanel" aria-labelledby="titles-tab">
     <!-- Title generation content -->
-      Hi for titles
+      Grade: <div id="gradeleveltitles"></div>
+      <br>Month:  <div id="monthNametitles"></div>
+            <form method="POST" action="/tpt/createracestitles">
+                <input type="hidden" name="specialDaysInput" id="specialDaysInput">
+
+        <button id="getTitlesBtn" type="submit">Get Titles</button>
+
+            </form>
+      <div id="titleList"></div>
   </div>
 
         <div class="tab-pane fade" id="stories" role="tabpanel" aria-labelledby="stories-tab">
@@ -108,17 +123,30 @@
 
 
 <script>
-    genTitlesBtn.addEventListener('click', () => {
-        var genTitlesBtn = document.getElementById('genTitlesBtn');
+    document.getElementById('genTitlesBtn').addEventListener('click', () => {
+        var monthSelect = document.getElementById('month');
+        var gradeLevelSelect = document.getElementById('gradeLevel');
         var titlesTab = document.getElementById('titles-tab');
 
-        genTitlesBtn.addEventListener('click', function() {
-            // Activate the Titles tab
-            new bootstrap.Tab(titlesTab).show();
-        });
-});
+        // Get the selected value of month and grade level
+        var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
+        var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
 
+                var specialDaysList = document.getElementById('daysList').innerText;
+        alert(specialDaysList);
+        document.getElementById('specialDaysInput').value = specialDaysList;
+        event.preventDefault();
+
+
+        // Set the innerHTML of the target elements with the selected values
+        document.getElementById('monthNametitles').innerHTML = selectedMonth;
+        document.getElementById('gradeleveltitles').innerHTML = selectedGradeLevel;
+
+        // Activate the Titles tab
+        new bootstrap.Tab(titlesTab).show();
+    });
 </script>
+
 
 
 

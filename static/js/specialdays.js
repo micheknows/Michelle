@@ -1,5 +1,6 @@
 let daysList;
 let monthName;
+let gradelevel;
 
 // Ensure that specialdays is a property of the window object and not overwritten elsewhere
 window.specialdays = window.specialdays || {};
@@ -9,9 +10,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   daysList = document.getElementById('daysList');
   monthName = document.getElementById('monthName');
+  gradelevel = document.getElementById('gradelevel');
+
 
   document.getElementById('getDaysBtn').addEventListener('click', () => {
-    fetch('/api/specialdays', {
+
+
+
+        var gradeLevelSelect = document.getElementById('gradeLevel');
+        var titlesTab = document.getElementById('titles-tab');
+
+        // Get the selected value of month and grade level
+        var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
+        var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
+
+        // Set the innerHTML of the target elements with the selected values
+        document.getElementById('monthNametitles').innerHTML = selectedMonth;
+        document.getElementById('gradeleveltitles').innerHTML = selectedGradeLevel;
+
+            fetch('/api/specialdays', {
       method: 'POST'
     })
     .then(response => response.json())
@@ -27,13 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Define the updateDaysList function as a method of specialdays
-  window.specialdays.updateDaysList = function(days) {
-    daysList.innerHTML = '';
+  window.specialdays.updateDaysList = function(days, listtoUpdate) {
+    listtoUpdate.innerHTML = '';
 
     for (const day in days) {
       const li = document.createElement('li');
-      li.textContent = `${day} (${days[day]})`; // Updated to show day and date
-      daysList.appendChild(li);
+      li.textContent = `${day}`;
+      listtoUpdate.appendChild(li);
     }
   };
 
