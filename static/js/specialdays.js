@@ -3,6 +3,7 @@ let monthName;
 
 // Ensure that specialdays is a property of the window object and not overwritten elsewhere
 window.specialdays = window.specialdays || {};
+window.saveEditBtn = window.saveEditBtn || {};
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -37,30 +38,75 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Edit day
-  daysList.addEventListener('click', (e) => {
-    if(e.target.tagName === 'LI') {
-      let day = e.target.textContent;
+let selectedLi;
 
-      e.target.innerHTML = `
-        <input type="text" value="${day}" id="editInput">
-        <button onclick="saveEdit('${day}', this)">Save Edit</button>
-      `;
+daysList.addEventListener('click', (e) => {
 
-      document.getElementById("editInput").focus();
-    }
-  });
+  let li = e.target;
 
-  function saveEdit(oldDay, el) {
-    const newDay = el.previousElementSibling.value;
-    el.parentElement.textContent = newDay;
+  // Get <li> if child element clicked
+  if(e.target.tagName !== 'LI') {
+    li = e.target.parentElement;
   }
 
-  // Delete day
-  daysList.addEventListener('click', (e) => {
-    if(e.target.className === 'deleteBtn') {
-      e.target.parentElement.remove();
-    }
-  });
+  if(selectedLi) {
+    selectedLi.classList.remove('selected');
+  }
+
+  selectedLi = li;
+  li.classList.add('selected');
+
+});
+
+
+window.saveEditBtn.saveEdit = function() {
+
+  const newText = editInput.value;
+  selectedLi.textContent = newText;
+
+  // Reset edit view
+  selectedLi.innerHTML = "";
+  selectedLi.textContent = newText;
+
+}
+
+// Edit button click
+editBtn.addEventListener('click', () => {
+
+  if(!selectedLi) {
+    return;
+  }
+
+  // Get current text
+  const text = selectedLi.textContent;
+
+  // Create edit view
+  selectedLi.innerHTML = `
+    <input type="text" id="editInput" value="${text}">
+    <button onclick="window.saveEditBtn.saveEdit()">Save</button>
+  `;
+
+  document.getElementById("editInput").focus();
+
+});
+
+
+
+// Delete button click
+delBtn.addEventListener('click', () => {
+
+  if(!selectedLi) {
+    return;
+  }
+
+  daysList.removeChild(selectedLi);
+
+  // Reset selected
+  selectedLi = null;
+
+});
+
+
 
   // Add day
   document.getElementById('addDayBtn').addEventListener('click', () => {
