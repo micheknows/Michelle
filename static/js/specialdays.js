@@ -1,5 +1,6 @@
 let daysList;
 let monthName;
+export let specialdays = {};
 
 document.addEventListener('DOMContentLoaded', () => {
 
