@@ -57,7 +57,7 @@ def get_special_days():
         print("It's NOT LOCAL!!!")
         if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']:
             month="December"
-        prompt = f"Give a list of all special days for the month of {month}. Include major holidays, minor special days and everything in between. The special days should be topics of interest to {grade} grade level students.  Give the days without any lead in text and format it as jsoon or a dictionary with date:day."
+        prompt = f"Give a list of all special days for the month of {month}. Include major holidays, minor special days and everything in between. The special days should be topics of interest to {grade} grade level students.  Give the days without any lead in text and format it as jsoon or a dictionary with date:day (example December 25:Christmas Day)."
 
         client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
         completion = client.chat.completions.create(
