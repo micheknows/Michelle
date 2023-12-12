@@ -1,3 +1,5 @@
+let daysList;
+
 document.addEventListener('DOMContentLoaded', () => {
 
 daysList = document.getElementById('daysList');
