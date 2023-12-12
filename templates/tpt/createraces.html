@@ -8,18 +8,18 @@
 
 <h1>Create R.A.C.E.S. Packets</h1>
 
-
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#specialDays">Special Days</a>
+    <div class="pad">
+<ul class="nav nav-tabs" id="raceTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="specialDays-tab" data-bs-toggle="tab" data-bs-target="#specialDays" type="button" role="tab" aria-controls="specialDays" aria-selected="true">Special Days</button>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#titles">Titles</a>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="titles-tab" data-bs-toggle="tab" data-bs-target="#titles" type="button" role="tab" aria-controls="titles" aria-selected="false">Titles</button>
   </li>
 </ul>
 
   <div class="tab-content">
-  <div class="tab-pane container active" id="specialDays">
+  <div class="tab-pane fade show active" id="specialDays" role="tabpanel" aria-labelledby="specialDays-tab">
       <P></P>
         <form method="POST" action="/tpt/createraces">
 
@@ -89,11 +89,14 @@
         </div>
   </div>
 
-  <div class="tab-pane container fade" id="titles">
+  <div class="tab-pane fade" id="titles" role="tabpanel" aria-labelledby="titles-tab">
     <!-- Title generation content -->
+      Hi for titles
   </div>
 
-
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
