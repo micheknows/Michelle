@@ -31,8 +31,7 @@ from flask import make_response, jsonify
 
 @app.route("/tpt/createraces", methods=['POST', 'GET'])
 def createraces():
-    response = get_special_days()
-    days = response.get_json()
+    days = get_special_days()
     print(days)
     return render_template('tpt/createraces.html', days=days)
 
