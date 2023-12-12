@@ -42,6 +42,7 @@ def get_special_days(month, grade):
         )
         reply = completion.choices[0].message.content
         print("Original reply is:  " + str(reply))
+        logger.info("Original reply is:  " + str(reply))
 
         return reply
 
