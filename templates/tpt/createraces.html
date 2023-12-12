@@ -54,12 +54,13 @@
   <ul id="daysList"> </ul>
 
 
-    <script>
-
-
-
-  specialdays.updateDaysList(days);
-
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+      const days = {{ days | tojson }};
+      if (days && window.specialdays && window.specialdays.updateDaysList) {
+          window.specialdays.updateDaysList(days);
+      }
+  });
 </script>
 
   <button id="addDayBtn">Add Day</button>
