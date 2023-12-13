@@ -37,7 +37,6 @@ let titles = [];
                 }
               updateList(titles,"titleList");
             });
-          });
 
         // Activate the Titles tab
         new bootstrap.Tab(titlesTab).show();
