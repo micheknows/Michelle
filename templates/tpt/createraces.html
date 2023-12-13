@@ -108,30 +108,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<script>
-    document.getElementById('genTitlesBtn').addEventListener('click', () => {
-        var monthSelect = document.getElementById('month');
-        var gradeLevelSelect = document.getElementById('gradeLevel');
-        var titlesTab = document.getElementById('titles-tab');
-
-        // Get the selected value of month and grade level
-        var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
-        var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
-
-                var specialDaysList = document.getElementById('daysList').innerText;
-        alert(specialDaysList);
-        document.getElementById('specialDaysInput').value = specialDaysList;
-        event.preventDefault();
-
-
-        // Set the innerHTML of the target elements with the selected values
-        document.getElementById('monthNametitles').innerHTML = selectedMonth;
-        document.getElementById('gradeleveltitles').innerHTML = selectedGradeLevel;
-
-        // Activate the Titles tab
-        new bootstrap.Tab(titlesTab).show();
-    });
-</script>
 
 
 

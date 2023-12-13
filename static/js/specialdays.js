@@ -1,4 +1,21 @@
 let days = [];
+let titles = [];
+
+// Get the titles when the get titles button is clicked
+    document.getElementById('genTitlesBtn').addEventListener('click', () => {
+
+        // Get the selected value of month and grade level
+        var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
+        var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
+        var specialDaysList = document.getElementById('daysList').innerText;
+
+        alert(specialDaysList);
+
+        // Activate the Titles tab
+        new bootstrap.Tab(titlesTab).show();
+    });
+
+
 // Get the special days when the get special days button is clicked
 document.getElementById('getDaysBtn').addEventListener('click', () => {
 
