@@ -196,7 +196,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
         // Get modal element
         const modalTitle = document.getElementById('titleModal');
 
-        titlesList.addEventListener('click', (e) => {
+        titleList.addEventListener('click', (e) => {
 
           // Get clicked li
           const li = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
@@ -223,11 +223,11 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
           // Update selected li
           selectedLi.innerText = updatedTitle;
            // Get index of selected li
-          const index = [...titlesList.children].indexOf(selectedLi);
+          const index = [...titleList.children].indexOf(selectedLi);
 
           // Update days array
           titles[index] = updatedTitle;
-          updateList(titles,'titlesList')
+          updateList(titles,'titleList')
           document.getElementById('modalTitle').value="";
 
           // Hide modal
@@ -240,10 +240,10 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
         document.getElementById('delTitleBtn').addEventListener('click', () => {
 
             // Get index
-              const index = [...titlesList.children].indexOf(selectedLi);
+              const index = [...titleList.children].indexOf(selectedLi);
 
               // Remove from list
-              titlesList.removeChild(selectedLi);
+              titleList.removeChild(selectedLi);
 
               // Remove from array
               titles.splice(index, 1);
@@ -254,7 +254,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
               // Reset selected
               selectedLi = null;
 
-          updateList(titles,'titlesList')
+          updateList(titles,'titleList')
           document.getElementById('modalTitle').value="";
 
           // Hide modal
