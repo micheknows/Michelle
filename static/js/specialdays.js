@@ -10,7 +10,34 @@ let titles = [];
         var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
         var specialDaysList = document.getElementById('daysList').innerText;
 
-        alert(specialDaysList);
+        a
+        // Let's run the python module to grab the titles'
+         fetch('/api/titles', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            month: selectedMonth,
+            grade: selectedGradeLevel,
+              days: specialDaysList
+          })
+        })
+            .then(response => response.json())
+            .catch(err => {
+              console.log(err)
+              alert('Error parsing JSON' + err)
+            })
+            .then(data => {
+                alert("data is " + data);
+              titles = [];
+
+                for (let k in data) {
+                  titles.push(k);
+                }
+              updateList(titles,"titleList");
+            });
+          });
 
         // Activate the Titles tab
         new bootstrap.Tab(titlesTab).show();
