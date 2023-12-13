@@ -32,6 +32,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
                 for (let k in data) {
                   days.push(k + ": " + data[k]);
                 }
+                alert("days is " + days);
               updateList(days,"daysList");
             });
           });
