@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 from dotenv import load_dotenv
 load_dotenv()
 import json
@@ -46,23 +48,28 @@ def get_titles():
     data = request.get_json()
     month = data['month']
     grade = data['grade']
-    day = data['days']
+    days = data['days']
 
 
     # when we can't use chatGPT locally
     if IS_LOCAL:
         # Use dummy data
+
         data = {
+            "month": "December",
+            "titles": [
             "My First Title",
             "My Second Title",
             "My Third Title"
-            }
+            ]
+        }
 
-        data_str = json.dumps(data['days'])
+        data_str = json.dumps(data['titles'])
         titles = do_json(data_str)
     else:
         prompt = f"Give a list of 60 titles that would be suitable for very short stories for students in grade {grade}.  Create one title for each of the topics in {days}.  But, if you do not have 60 titles, then just create more titles, related to the month of {month}.  The titles should be topics of interest to {grade} grade level students.  Give the titles without any lead in text and format it as jsoon.  Do not duplicate any titles.  Use proper title capitalization."
         reply = chatComplete('user', prompt)
+        print("reply is " + reply)
         titles = do_json(reply)
 
     return titles
