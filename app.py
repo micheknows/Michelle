@@ -57,7 +57,7 @@ def get_titles():
             "My Second Title",
             "My Third Title"
             }
-        }
+
         data_str = json.dumps(data['days'])
         titles = do_json(data_str)
     else:
