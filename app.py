@@ -71,9 +71,15 @@ def get_titles():
         prompt = f"Give a list of 60 titles that would be suitable for very short stories for students in grade {grade}.  Create one title for each of the topics in {days}.  But, if you do not have 60 titles, then just create more titles, related to the month of {month}.  The titles should be topics of interest to {grade} grade level students.  Give the titles without any lead in text and format it as jsoon.  Do not duplicate any titles.  Use proper title capitalization."
         reply = chatComplete('user', prompt)
         print("reply is " + reply)
-        titles = do_json(reply['titles'])
+        titles = reply.split('\n')
+        # Remove empty strings, if any
+        titles = [title for title in titles if title]
+        # Convert the list to JSON
+        reply_json = json.dumps(titles)
+        titles = do_json(reply_json['titles'])  # Now you can access 'titles'
 
     return titles
+
 
 
 # This method grabs special days from ChatGPT API

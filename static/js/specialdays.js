@@ -3,7 +3,7 @@ let titles = [];
 
 // Get the titles when the get titles button is clicked
     document.getElementById('genTitlesBtn').addEventListener('click', () => {
-        var titlesTab = document.getElementById('titles');
+        var titlesTab = document.getElementById('titles-tab');
 
         // Get the selected value of month and grade level
         var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
