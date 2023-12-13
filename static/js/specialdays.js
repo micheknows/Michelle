@@ -194,8 +194,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
   // Edit a title that already exists
         // Get modal element
-        let selectedLi;
-        const modal = document.getElementById('titleModal');
+        const modalTitle = document.getElementById('titleModal');
 
         titlesList.addEventListener('click', (e) => {
 
@@ -206,7 +205,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
           selectedLi = li;
 
           // Show modal
-          modal.style.display = 'block';
+          modalTitle.style.display = 'block';
 
           // Set modal data from li
           document.getElementById('modalTitleName').innerText = li.innerText;
@@ -232,7 +231,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
           document.getElementById('modalTitle').value="";
 
           // Hide modal
-          modal.style.display = 'none';
+          modalTitle.style.display = 'none';
 
         });
 
@@ -259,7 +258,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
           document.getElementById('modalTitle').value="";
 
           // Hide modal
-          modal.style.display = 'none';
+          modalTitle.style.display = 'none';
 
         });
 
@@ -269,7 +268,7 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
 
           // Hide modal
-          modal.style.display = 'none';
+          modalTitle.style.display = 'none';
           document.getElementById('modalTitle').value="";
 
         });
