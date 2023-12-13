@@ -29,13 +29,24 @@ let titles = [];
               alert('Error parsing JSON' + err)
             })
             .then(data => {
-                alert("data is " + data);
               titles = [];
 
-                // Iterate over the data array and push each title
-                data['titles'].forEach(title => {
-                    titles.push(title);
-                });
+            // Check if data has 'titles' key, and use it if present
+                if (data.hasOwnProperty('titles') && Array.isArray(data['titles'])) {
+                    data['titles'].forEach(title => {
+                        titles.push(title);
+                    });
+                }
+                // If data is a direct array
+                else if (Array.isArray(data)) {
+                    data.forEach(title => {
+                        titles.push(title);
+                    });
+                }
+                // Handle unexpected data format
+                else {
+                    console.error('Unexpected data format', data);
+                }
               updateList(titles,"titleList");
             });
 
