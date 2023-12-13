@@ -10,7 +10,7 @@ let titles = [];
         var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
         var specialDaysList = document.getElementById('daysList').innerText;
 
-        a
+
         // Let's run the python module to grab the titles'
          fetch('/api/titles', {
           method: 'POST',
