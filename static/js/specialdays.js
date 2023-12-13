@@ -1,5 +1,112 @@
 let days = [];
 let titles = [];
+let stories = [];
+let storyIndex = 0;
+
+
+// next story button
+document.getElementById('nextstory').addEventListener('click', () => {
+    storyIndex++;
+    if(storyIndex  >= stories.length) {
+        storyIndex = 0;
+    }
+    displayStory(storyIndex);
+})
+
+// previous story button
+document.getElementById('prevstory').addEventListener('click', () => {
+    storyIndex--;
+    if(storyIndex  < 0) {
+        storyIndex = stories.length-1;
+    }
+    displayStory(storyIndex);
+})
+
+
+// get stories when getStoriesBtn is clicked
+document.getElementById('getStoriesBtn').addEventListener('click', () => {
+        var storiesTab = document.getElementById('stories-tab');
+
+        // Now get each story one at the time based on the titles
+        // stories has to be set up like this
+            //  stories = [['title':'My Title', 'question':'My Question', 'story': 'Story text', 'bwimage': image, 'colorimage': image, 'vocabulary':['word':'definition']]]
+        // Get the list of titles
+        if (!titles || titles.length === 0) {
+            alert("Please generate titles first!");
+            return;
+        }
+
+        stories = []; // Reset stories array
+        let totalTitles = titles.length;
+
+        // Iterate through the titles and show progress while doing it
+        titles.forEach((title, index) => {
+            // Update the progress bar
+            let progressPercent = ((index + 1) / totalTitles) * 100;
+            updateProgressBar(progressPercent);
+
+            // For each title, call getStories that will ask ChatGPT for the Question and the story and vocabulary
+                    // Placeholder: Call getStories to ask ChatGPT for the Question, Story, and Vocabulary
+        let question = "Sample Question for " + title; // Replace with actual call to getStories
+        let storyText = "Sample Story text for " + title; // Replace with actual call to getStories
+        let vocabulary = [{"word": "example", "definition": "an instance serving for illustration"}]; // Replace with actual call to getStories
+
+
+            // add title, question, story, and vocab to stories
+
+            // call getImage and ask for b&w coloring image and add to stories
+                    // Placeholder: Call getImage for b&w coloring image
+        let bwImage = "black_and_white_image_url"; // Replace with actual call to getImage
+
+
+            // call getImage and ask for color image and add to stories
+                    // Placeholder: Call getImage for color image
+        let colorImage = "color_image_url"; // Replace with actual call to getImage
+
+                    // Add to stories array
+        stories.push({
+            'title': title,
+            'question': question,
+            'story': storyText,
+            'bwimage': bwImage,
+            'colorimage': colorImage,
+            'vocabulary': vocabulary
+        });
+
+        });
+
+         // show first story in the stories tab and update the "1 of 30"
+    displayStory(0);
+            // allow user to edit question, title and story and resave
+            // allow user to regenerate color or b&w image and resave
+
+         // allow for click back and next buttons to move through the 30 stories:  update the "1 of 30" on each movement
+
+          // allow for generate packet button which then generates the whole packet
+
+            // Activate the Stories tab
+        new bootstrap.Tab(storiesTab).show();
+})
+
+function displayStory(index) {
+    if (index < 0 || index >= stories.length) {
+        console.log("Invalid story index");
+        return;
+    }
+    storyIndex = index;
+
+    let story = stories[index];
+    // Update the DOM with story details
+    // You need to write code here to update the story details in your HTML
+    document.getElementById('titleInput').value = story['title'];
+    document.getElementById('questionInput').value = story['question'];
+    document.getElementById('storyTextarea').innerText = story['story']
+    console.log("Displaying story:", story);
+
+    // Update the "1 of 30" indicator
+    document.getElementById("pagenum").textContent = `Story ${index + 1} of ${stories.length}`;
+}
+
 
 // Get the titles when the get titles button is clicked
     document.getElementById('genTitlesBtn').addEventListener('click', () => {
@@ -285,5 +392,12 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
           mylist.appendChild(li);
         })
-  };
+  }
+
+  function updateProgressBar(percent) {
+    let progressBar = document.getElementById('progressBar');
+    progressBar.style.width = percent + '%';
+    progressBar.setAttribute('aria-valuenow', percent);
+    progressBar.textContent = percent.toFixed(0) + '%';
+}
 
