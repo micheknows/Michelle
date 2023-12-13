@@ -29,37 +29,26 @@ let titles = [];
               alert('Error parsing JSON' + err)
             })
             .then(data => {
-                console.log('Parsed data:', data); // Diagnostic logging
               titles = [];
+                try {
+                    // Parse the data as JSON
+                    var jsonData = JSON.parse(data);
 
-                // Check if the response is a string that needs to be parsed as JSON
-                    if (typeof data === 'string') {
-                        try {
-                            data = JSON.parse(data);
-                        } catch (e) {
-                            console.error('Error parsing data as JSON', e);
-                            return;
-                        }
+                    if (jsonData && jsonData['titles'] && Array.isArray(jsonData['titles'])) {
+                        titles = jsonData['titles'];
+                        updateList(titles, "titleList");
+                    } else {
+                        console.error('Unexpected data format after JSON parsing', jsonData);
                     }
+                } catch (error) {
+                    console.error('Error parsing data as JSON:', error);
+                }
 
-            // Check if data has 'titles' key, and use it if present
-                if (data.hasOwnProperty('titles') && Array.isArray(data['titles'])) {
-                    data['titles'].forEach(title => {
-                        titles.push(title);
-                    });
-                }
-                // If data is a direct array
-                else if (Array.isArray(data)) {
-                    data.forEach(title => {
-                        titles.push(title);
-                    });
-                }
-                // Handle unexpected data format
-                else {
-                    console.error('Unexpected data format', data);
-                }
-              updateList(titles,"titleList");
-            });
+
+            updateList(titles, "titleList");
+
+                    })
+
 
         // Activate the Titles tab
         new bootstrap.Tab(titlesTab).show();
@@ -108,6 +97,14 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
     const day = prompt('Enter special day:');
     days.push(day);
       updateList(days, "daysList");
+  });
+
+
+    // Add a title to the list manually
+  document.getElementById('addTitleBtn').addEventListener('click', () => {
+    const title = prompt('Enter title:');
+    titles.push(title);
+      updateList(titles, "titleList");
   });
 
 
@@ -190,6 +187,90 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
           // Hide modal
           modal.style.display = 'none';
           document.getElementById('modalDay').value="";
+
+        });
+
+
+
+  // Edit a title that already exists
+        // Get modal element
+        let selectedLi;
+        const modal = document.getElementById('titleModal');
+
+        titlesList.addEventListener('click', (e) => {
+
+          // Get clicked li
+          const li = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
+
+          // Set selected title
+          selectedLi = li;
+
+          // Show modal
+          modal.style.display = 'block';
+
+          // Set modal data from li
+          document.getElementById('modalTitleName').innerText = li.innerText;
+
+        });
+
+
+
+        // Save changes and close modal
+        document.getElementById('saveTitleBtn').addEventListener('click', () => {
+
+          // Get updated value
+          const updatedTitle = document.getElementById('modalTitle').value;
+
+          // Update selected li
+          selectedLi.innerText = updatedTitle;
+           // Get index of selected li
+          const index = [...titlesList.children].indexOf(selectedLi);
+
+          // Update days array
+          titles[index] = updatedTitle;
+          updateList(titles,'titlesList')
+          document.getElementById('modalTitle').value="";
+
+          // Hide modal
+          modal.style.display = 'none';
+
+        });
+
+
+        // Delete day and close modal
+        document.getElementById('delTitleBtn').addEventListener('click', () => {
+
+            // Get index
+              const index = [...titlesList.children].indexOf(selectedLi);
+
+              // Remove from list
+              titlesList.removeChild(selectedLi);
+
+              // Remove from array
+              titles.splice(index, 1);
+
+              // Clear input
+              document.getElementById('modalTitle').value="";
+
+              // Reset selected
+              selectedLi = null;
+
+          updateList(titles,'titlesList')
+          document.getElementById('modalTitle').value="";
+
+          // Hide modal
+          modal.style.display = 'none';
+
+        });
+
+
+        // Close modal without saving
+        document.getElementById('closeTitleBtn').addEventListener('click', () => {
+
+
+          // Hide modal
+          modal.style.display = 'none';
+          document.getElementById('modalTitle').value="";
 
         });
 

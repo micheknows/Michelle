@@ -68,15 +68,15 @@ def get_titles():
         data_str = json.dumps(data['titles'])
         titles = do_json(data_str)
     else:
-        prompt = f"Give a list of 60 titles that would be suitable for very short stories for students in grade {grade}.  Create one title for each of the topics in {days}.  But, if you do not have 60 titles, then just create more titles, related to the month of {month}.  The titles should be topics of interest to {grade} grade level students.  Give the titles without any lead in text and format it as jsoon.  Do not duplicate any titles.  Use proper title capitalization.  Do not add a date.  It should just be a json list of titles."
+        prompt = (
+            f"Create a JSON-formatted list of 60 unique titles suitable for very short stories for grade {grade} students. "
+            f"Each title should correspond to one of the topics in {days}. If fewer than 60 topics are provided, "
+            f"create additional titles related to the month of {month}. The titles should be of interest to {grade} grade level students, "
+            f"formatted as a JSON array of strings as the value to the key 'titles', without additional text or decoration. Use proper title capitalization."
+        )
         reply = chatComplete('user', prompt)
         print("reply is " + reply)
-        titles = reply.split('\n')
-        # Remove empty strings, if any
-        titles = [title for title in titles if title]
-        # Convert the list to JSON
-        titles = json.dumps(titles)
-
+        titles= jsonify(reply)
     return titles
 
 
