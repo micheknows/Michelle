@@ -61,8 +61,6 @@ def get_titles():
         data_str = json.dumps(data['days'])
         titles = do_json(data_str)
     else:
-        if month not in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']:
-            month="December"
         prompt = f"Give a list of 60 titles that would be suitable for very short stories for students in grade {grade}.  Create one title for each of the topics in {days}.  But, if you do not have 60 titles, then just create more titles, related to the month of {month}.  The titles should be topics of interest to {grade} grade level students.  Give the titles without any lead in text and format it as jsoon.  Do not duplicate any titles.  Use proper title capitalization."
         reply = chatComplete('user', prompt)
         titles = do_json(reply)
@@ -118,7 +116,6 @@ def chatComplete(role, prompt):
 
 # This method does the error catching for jsonifying
 def do_json(text):
-    print("text is " + str(text))
     try:
         result = json.loads(text)
 
