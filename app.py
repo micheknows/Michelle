@@ -75,8 +75,7 @@ def get_titles():
         # Remove empty strings, if any
         titles = [title for title in titles if title]
         # Convert the list to JSON
-        reply_json = json.dumps(titles)
-        titles = do_json(reply_json['titles'])  # Now you can access 'titles'
+        titles = json.dumps(titles)
 
     return titles
 
