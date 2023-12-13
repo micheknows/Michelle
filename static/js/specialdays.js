@@ -31,6 +31,16 @@ let titles = [];
             .then(data => {
               titles = [];
 
+                // Check if the response is a string that needs to be parsed as JSON
+                    if (typeof data === 'string') {
+                        try {
+                            data = JSON.parse(data);
+                        } catch (e) {
+                            console.error('Error parsing data as JSON', e);
+                            return;
+                        }
+                    }
+
             // Check if data has 'titles' key, and use it if present
                 if (data.hasOwnProperty('titles') && Array.isArray(data['titles'])) {
                     data['titles'].forEach(title => {
