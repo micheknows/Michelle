@@ -44,13 +44,13 @@ let titles = [];
             // Check if data has 'titles' key, and use it if present
                 if (data.hasOwnProperty('titles') && Array.isArray(data['titles'])) {
                     data['titles'].forEach(title => {
-                        titles.push(title);
+                        titles.push(title.trim().replace(/^"|"$/g, ''));
                     });
                 }
                 // If data is a direct array
                 else if (Array.isArray(data)) {
                     data.forEach(title => {
-                        titles.push(title);
+                        titles.push(title.trim().replace(/^"|"$/g, ''));
                     });
                 }
                 // Handle unexpected data format
