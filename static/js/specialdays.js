@@ -33,7 +33,7 @@ let titles = [];
               titles = [];
 
                 // Iterate over the data array and push each title
-                data.forEach(title => {
+                data['titles'].forEach(title => {
                     titles.push(title);
                 });
               updateList(titles,"titleList");
