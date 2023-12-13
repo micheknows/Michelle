@@ -41,9 +41,6 @@ document.getElementById('getStoriesBtn').addEventListener('click', () => {
 
         // Iterate through the titles and show progress while doing it
         titles.forEach((title, index) => {
-            // Update the progress bar
-            let progressPercent = ((index + 1) / totalTitles) * 100;
-            updateProgressBar(progressPercent);
 
             // For each title, call getStories that will ask ChatGPT for the Question and the story and vocabulary
                     // Placeholder: Call getStories to ask ChatGPT for the Question, Story, and Vocabulary
@@ -51,32 +48,63 @@ document.getElementById('getStoriesBtn').addEventListener('click', () => {
         let storyText = "Sample Story text for " + title; // Replace with actual call to getStories
         let vocabulary = [{"word": "example", "definition": "an instance serving for illustration"}]; // Replace with actual call to getStories
 
+        var story;
+        var selectedMonth = monthSelect.options[monthSelect.selectedIndex].value;
+        var selectedGradeLevel = gradeLevelSelect.options[gradeLevelSelect.selectedIndex].value;
+            // Let's run the python module to grab the story'
+         fetch('/api/story', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            month: selectedMonth,
+            grade: selectedGradeLevel,
+              title: title
+          })
+        })
+            .then(response => response.json())
+            .catch(err => {
+              console.log(err)
+              alert('Error parsing JSON' + err)
+            })
+            .then(data => {
 
-            // add title, question, story, and vocab to stories
+                story = JSON.parse(data);
+              console.log("story is " + story);
+                    // add title, question, story, and vocab to stories
 
-            // call getImage and ask for b&w coloring image and add to stories
-                    // Placeholder: Call getImage for b&w coloring image
-        let bwImage = "black_and_white_image_url"; // Replace with actual call to getImage
+                    // call getImage and ask for b&w coloring image and add to stories
+                            // Placeholder: Call getImage for b&w coloring image
+                let bwImage = "black_and_white_image_url"; // Replace with actual call to getImage
 
 
-            // call getImage and ask for color image and add to stories
-                    // Placeholder: Call getImage for color image
-        let colorImage = "color_image_url"; // Replace with actual call to getImage
+                    // call getImage and ask for color image and add to stories
+                            // Placeholder: Call getImage for color image
+                let colorImage = "color_image_url"; // Replace with actual call to getImage
 
-                    // Add to stories array
-        stories.push({
-            'title': title,
-            'question': question,
-            'story': storyText,
-            'bwimage': bwImage,
-            'colorimage': colorImage,
-            'vocabulary': vocabulary
-        });
+                            // Add to stories array
+                stories.push({
+                    'title': title,
+                    'question': story['question'],
+                    'story': story['story'],
+                    'bwimage': bwImage,
+                    'colorimage': colorImage,
+                    'vocabulary': story['vocabulary']
+                });
+                console.log("Added:  " + title);
+                displayStory(stories.length-1);
+                // Update the progress bar
+                let progressPercent = ((stories.length) / totalTitles) * 100;
+                updateProgressBar(progressPercent);
+            });
+
+
 
         });
 
          // show first story in the stories tab and update the "1 of 30"
-    displayStory(0);
+    //displayStory(0);
             // allow user to edit question, title and story and resave
             // allow user to regenerate color or b&w image and resave
 

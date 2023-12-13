@@ -32,13 +32,47 @@ def createtpt():
 
 
 #This is the main page where we are creating races worksheets
-# We wouldn't even need to load special days here if we never reload this page, right?
 @app.route("/tpt/createraces", methods=['POST', 'GET'])
 def createraces():
-    #days = get_special_days()
-    #print(days)
-    #return render_template('tpt/createraces.html', days=days)
     return render_template('tpt/createraces.html')
+
+
+# This method grabs a question and a story for one title from ChatGPT API
+@app.route("/api/story", methods=['POST'])
+def get_story():
+    data = request.get_json()
+    month = data['month']
+    grade = data['grade']
+    title = data['title']
+
+    prompt = (
+            "Create a short story and a R.A.C.E.S. writing prompt question for " + str(grade) + " grade students. "
+                                                                                                "\n\nTitle: " + str(
+        title) + "\nMonth: " + str(month) + "\nGrade: " + str(grade) + "\n\n"
+                                                                       "Guidelines:\n"
+                                                                       "- Word count: 60-150 words.\n"
+                                                                       "- Interest level: Suitable for " + str(
+        grade) + " grade students. "
+                 "For Kindergarten, the story should be on a kindergarten interest level, and it's acceptable if it's not decodable by kindergarteners as the teacher will read it aloud.\n"
+                 "- Decodable: For grades other than Kindergarten, ensure the story is decodable by students of that grade.\n"
+                 "- Relate the story to the month of " + str(month) + " indirectly, if possible.\n"
+                                                                      "- Story type: Use a coin toss simulation to decide between fiction and non-fiction, unless the title dictates otherwise.\n"
+                                                                      "- Vocabulary: Include up to 4 non-decodable words for " + str(
+        grade) + " grade students, with definitions appropriate for this grade level.\n\nDo not begin with once upon a time."
+                 "Task:\n"
+                 "1. Write the short story.\n"
+                 "2. Create a R.A.C.E.S. question that allows citing text evidence from the story.\n\n"
+                 "Output as a JSON dictionary with 'question', 'story', and 'vocabulary' keys. "
+                 "Format 'vocabulary' as a list of {'word': 'definition'} pairs, tailored for " + str(
+        grade) + " grade understanding."
+    )
+
+    reply = chatComplete('user', prompt)
+    print("reply is " + reply)
+    story= jsonify(reply)
+
+    return story
+
 
 
 
@@ -69,8 +103,8 @@ def get_titles():
         titles = do_json(data_str)
     else:
         prompt = (
-            f"Create a JSON-formatted list of 60 unique titles suitable for very short stories for grade {grade} students. "
-            f"Each title should correspond to one of the topics in {days}. If fewer than 60 topics are provided, "
+            f"Create a JSON-formatted list of 45 unique titles suitable for very short stories for grade {grade} students. "
+            f"Each title should correspond to one of the topics in {days}. If fewer than  45 topics are provided, "
             f"create additional titles related to the month of {month}. The titles should be of interest to {grade} grade level students, "
             f"formatted as a JSON array of strings as the value to the key 'titles', without additional text or decoration. Use proper title capitalization."
         )
