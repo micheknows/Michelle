@@ -29,6 +29,7 @@ let titles = [];
               alert('Error parsing JSON' + err)
             })
             .then(data => {
+                console.log('Parsed data:', data); // Diagnostic logging
               titles = [];
 
                 // Check if the response is a string that needs to be parsed as JSON
@@ -44,13 +45,13 @@ let titles = [];
             // Check if data has 'titles' key, and use it if present
                 if (data.hasOwnProperty('titles') && Array.isArray(data['titles'])) {
                     data['titles'].forEach(title => {
-                        titles.push(title.trim().replace(/^"|"$/g, ''));
+                        titles.push(title);
                     });
                 }
                 // If data is a direct array
                 else if (Array.isArray(data)) {
                     data.forEach(title => {
-                        titles.push(title.trim().replace(/^"|"$/g, ''));
+                        titles.push(title);
                     });
                 }
                 // Handle unexpected data format
