@@ -32,9 +32,10 @@ let titles = [];
                 alert("data is " + data);
               titles = [];
 
-                for (let k in data) {
-                  titles.push(k);
-                }
+                // Iterate over the data array and push each title
+                data.forEach(title => {
+                    titles.push(title);
+                });
               updateList(titles,"titleList");
             });
 
