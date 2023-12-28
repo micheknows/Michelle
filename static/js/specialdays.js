@@ -331,23 +331,6 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
         // Get modal element
         const modalTitle = document.getElementById('titleModal');
 
-        titleList.addEventListener('click', (e) => {
-
-          // Get clicked li
-          const li = e.target.tagName === 'LI' ? e.target : e.target.parentElement;
-
-          // Set selected title
-          selectedLi = li;
-
-          // Show modal
-          modalTitle.style.display = 'block';
-
-          // Set modal data from li
-          document.getElementById('modalTitleName').innerText = li.innerText;
-
-        });
-
-
 
         // Save changes and close modal
         document.getElementById('saveTitleBtn').addEventListener('click', () => {
@@ -471,8 +454,8 @@ document.getElementById('deleteTitleBtn').addEventListener('click', () => {
 
           mylist.appendChild(li);
         })
-      if(listtoUpdate=='titleList'):
-        updateTitleList();
+      if(listtoUpdate=='titleList'){
+        updateTitleList();}
   }
 
   function updateProgressBar(percent) {
@@ -521,3 +504,16 @@ document.getElementById('regenerateColorImageBtn').addEventListener('click', fun
     });
 });
 
+// Function to select all titles
+document.getElementById('selectAllTitlesBtn').addEventListener('click', () => {
+    document.querySelectorAll('.title-checkbox').forEach(cb => {
+        cb.checked = true;
+    });
+});
+
+// Function to deselect all titles
+document.getElementById('deselectAllTitlesBtn').addEventListener('click', () => {
+    document.querySelectorAll('.title-checkbox').forEach(cb => {
+        cb.checked = false;
+    });
+});
