@@ -408,11 +408,62 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
         });
 
+// Function to update the title list
+function updateTitleList() {
+    const titleListElement = document.getElementById('titleList');
+    titleListElement.innerHTML = titles.map((title, index) => `
+        <div class="form-check">
+            <input class="form-check-input title-checkbox" type="checkbox" value="${index}" id="titleCheckbox${index}">
+            <label class="form-check-label" for="titleCheckbox${index}">
+                ${title}
+            </label>
+        </div>
+    `).join('');
+}
+
+// Function to get selected titles
+function getSelectedTitles() {
+    const checkboxes = document.querySelectorAll('.title-checkbox:checked');
+    const selectedIndexes = Array.from(checkboxes).map(cb => parseInt(cb.value));
+    const selectedTitles = selectedIndexes.map(index => titles[index]);
+    return { selectedIndexes, selectedTitles };
+}
+
+// Edit selected titles
+document.getElementById('editTitleBtn').addEventListener('click', () => {
+    const { selectedTitles } = getSelectedTitles();
+    if (selectedTitles.length !== 1) {
+        alert('Please select exactly one title to edit.');
+        return;
+    }
+    const newTitle = prompt('Edit title:', selectedTitles[0]);
+    if (newTitle) {
+        titles[titles.indexOf(selectedTitles[0])] = newTitle;
+        updateTitleList();
+    }
+});
+
+// Delete selected titles
+document.getElementById('deleteTitleBtn').addEventListener('click', () => {
+    const { selectedIndexes } = getSelectedTitles();
+    if (selectedIndexes.length === 0) {
+        alert('Please select at least one title to delete.');
+        return;
+    }
+    if (confirm('Are you sure you want to delete the selected titles?')) {
+        titles = titles.filter((_, index) => !selectedIndexes.includes(index));
+        updateTitleList();
+    }
+});
+
+
+
 
    // this will update any given list with the given contents
   function updateList(contents, listtoUpdate) {
+
       var mylist = document.getElementById(listtoUpdate)
-    mylist.innerHTML = '';
+      mylist.innerHTML = '';
         contents.forEach(content => {
 
           const li = document.createElement('li');
@@ -420,6 +471,8 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
 
           mylist.appendChild(li);
         })
+      if(listtoUpdate=='titleList'):
+        updateTitleList();
   }
 
   function updateProgressBar(percent) {
