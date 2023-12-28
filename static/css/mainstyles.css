@@ -8,3 +8,11 @@
 .pad {
   padding: 15px;
 }
+
+/* Add to your CSS file to style the image */
+#colorImagePlaceholder {
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+    height: auto;
+    margin: 10px 0;
+}

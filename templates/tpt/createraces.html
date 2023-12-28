@@ -149,8 +149,17 @@
           <div class="col-md-4">
 
                   <label for="colorImage" class="col-md-4 col-form-label">Color Image</label>
-              <div id="colorImage" class="col-md-4"> </div> <br />
-              <button type="button" class="btn btn-link">Regenerate</button>
+              <div id="colorImage" class="col-md-4">
+              <!-- Add this inside the <div id="colorImage"> where you want the image to appear -->
+                <img id="colorImagePlaceholder" src="https://via.placeholder.com/300" alt="Color Image" />
+
+
+
+              </div> <br />
+              <!-- Regenerate button for color image -->
+                <button type="button" id="regenerateColorImageBtn" class="btn btn-link">Regenerate</button>
+
+
           </div>
           <div class="col-md-4">
 

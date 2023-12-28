@@ -427,5 +427,44 @@ document.getElementById('getDaysBtn').addEventListener('click', () => {
     progressBar.style.width = percent + '%';
     progressBar.setAttribute('aria-valuenow', percent);
     progressBar.textContent = percent.toFixed(0) + '%';
+
 }
+
+// Run the generate for the color image
+
+document.getElementById('regenerateColorImageBtn').addEventListener('click', function() {
+    const storyText = document.getElementById('storyTextarea').value;
+    if (!storyText) {
+        alert('Please enter a story first.');
+        return;
+    }
+
+    // Prepare the prompt for the image
+    const prompt = "Create a children's book illustration that matches the following story: " + storyText;
+
+    // Make an AJAX call to the Flask backend
+    fetch('/generate-image', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.image_url) {
+            // Display the new image
+            const imageElement = document.getElementById('colorImagePlaceholder');
+            imageElement.src = data.image_url;
+            imageElement.style.display = 'block';
+        } else if (data.error) {
+            console.error('Error generating image:', data.error);
+            alert('Failed to generate image. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: Could not connect to the server.');
+    });
+});
 

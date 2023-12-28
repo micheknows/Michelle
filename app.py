@@ -37,6 +37,20 @@ def createraces():
     return render_template('tpt/createraces.html')
 
 
+
+# This method grabs a generated image from API
+@app.route('/generate-image', methods=['POST'])
+def generate_image():
+    data = request.json
+    prompt = data['prompt']
+    try:
+        response = openai.Image.create(prompt=prompt, n=1, size='1024x1024')
+        image_url = response['data'][0]['url']  # Assuming the API returns a URL to the image
+        return jsonify({'image_url': image_url})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 # This method grabs a question and a story for one title from ChatGPT API
 @app.route("/api/story", methods=['POST'])
 def get_story():
