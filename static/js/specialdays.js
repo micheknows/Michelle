@@ -495,7 +495,7 @@ document.getElementById('regenerateColorImageBtn').addEventListener('click', fun
             imageElement.style.display = 'block';
         } else if (data.error) {
             console.error('Error generating image:', data.error);
-            alert('Failed to generate image. Please try again.');
+            alert('Failed to generate image. Please try again.', data.error);
         }
     })
     .catch(error => {
